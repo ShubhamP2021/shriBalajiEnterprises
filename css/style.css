@@ -2166,6 +2166,9 @@ button, input, select, textarea {
   .desktop-nav {
     display: none !important;
   }
+  .desktop-only {
+    display: none !important;
+  }
   .mobile-hamburger-btn {
     display: flex;
   }
