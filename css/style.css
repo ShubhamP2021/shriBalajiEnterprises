@@ -72,8 +72,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+}
+
+section[id], div[id] {
+  scroll-margin-top: 80px;
 }
 
 body {
@@ -1316,7 +1321,8 @@ button, input, select, textarea {
 .specs-table-wrapper {
   background: var(--white);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--steel-200);
   margin-top: 40px;
@@ -2014,21 +2020,21 @@ button, input, select, textarea {
 }
 
 .floating-btn {
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, visibility 0.25s ease;
   color: var(--white);
   border: none;
 }
 
 .floating-btn:hover {
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
 .floating-btn.whatsapp {
@@ -2043,11 +2049,13 @@ button, input, select, textarea {
   background: var(--steel-800);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
 }
 
 .floating-btn.top.show {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* Mobile Sticky Bottom Bar */
@@ -2057,18 +2065,22 @@ button, input, select, textarea {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(11, 19, 43, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 10px 16px;
-  z-index: 998;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+  background: rgba(11, 19, 43, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+  z-index: 1000;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .mobile-bar-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.15fr 1fr;
   gap: 8px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .mobile-bar-btn {
@@ -2076,30 +2088,39 @@ button, input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 46px;
   color: var(--white);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 6px 4px;
-  border-radius: var(--radius-sm);
-  gap: 4px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  gap: 3px;
+  text-decoration: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.mobile-bar-btn:active {
+  transform: scale(0.96);
 }
 
 .mobile-bar-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.mobile-bar-btn.wa {
-  background: var(--whatsapp-color);
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
 }
 
 .mobile-bar-btn.call {
   background: var(--primary-600);
 }
 
+.mobile-bar-btn.wa {
+  background: var(--whatsapp-color);
+}
+
 .mobile-bar-btn.quote {
-  background: var(--accent-gold);
+  background: linear-gradient(135deg, var(--accent-amber), var(--accent-gold));
   color: var(--primary-900);
+  font-weight: 800;
 }
 
 /* Toast notification */
@@ -2148,7 +2169,7 @@ button, input, select, textarea {
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
   .calculator-container {
     grid-template-columns: 1fr;
@@ -2175,74 +2196,261 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 68px;
+  }
+  section[id], div[id] {
+    scroll-margin-top: 68px;
+  }
+
+  body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
   .top-bar {
     display: none;
   }
+
   .header-container {
     padding-top: 8px;
     padding-bottom: 8px;
   }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.66rem;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
   .btn-quote-compact {
     padding: 6px 14px;
     font-size: 0.8rem;
   }
+
   .hero-section {
-    padding: 50px 0 60px 0;
+    padding: 35px 0 45px 0;
   }
+
   .hero-title {
-    font-size: 2.1rem;
+    font-size: 1.95rem;
   }
+
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
+
+  .hero-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .hero-cta-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .section {
+    padding: 50px 0;
+  }
+
+  .section-header {
+    margin-bottom: 30px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+  }
+
   .benefit-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
+
   .products-grid {
     grid-template-columns: 1fr;
   }
+
+  .specs-table-wrapper {
+    margin-top: 24px;
+    border-radius: var(--radius-md);
+  }
+
+  .specs-table {
+    min-width: 560px;
+  }
+
   .comparison-grid {
     grid-template-columns: 1fr;
   }
+
   .contact-grid {
     grid-template-columns: 1fr;
   }
+
   .reviews-grid {
     grid-template-columns: 1fr;
   }
+
+  .calculator-container {
+    border-radius: var(--radius-md);
+  }
+
   .calc-form-pane, .calc-result-pane {
-    padding: 22px;
+    padding: 20px 16px;
   }
+
+  .calc-group {
+    margin-bottom: 20px;
+  }
+
+  .calc-card-label {
+    padding: 12px 14px;
+  }
+
+  .calc-result-amount {
+    font-size: 2.2rem;
+  }
+
+  .calc-estimate-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .calc-estimate-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .wholesale-banner {
-    padding: 22px;
+    padding: 22px 18px;
   }
+
+  /* Show mobile bottom bar and dock back to top above it */
   .mobile-bottom-bar {
     display: block;
   }
-  body {
-    padding-bottom: 60px;
+
+  .floating-action-bar {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    gap: 8px;
+  }
+
+  /* Hide redundant circular WhatsApp & Call buttons on mobile */
+  .floating-action-bar .floating-btn.whatsapp,
+  .floating-action-bar .floating-btn.call {
+    display: none;
+  }
+
+  .floating-btn.top {
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  }
+
+  .floating-btn.top svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (max-width: 480px) {
+  .container, .container-wide {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.62rem;
+    letter-spacing: 0.3px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .logo-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-quote-compact {
+    display: none;
+  }
+
+  .hero-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .hero-badge-item {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  .hero-title {
+    font-size: 1.65rem;
+  }
+
   .hero-trust-metrics {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
+
+  .trust-metric-item {
+    padding: 14px 16px;
+  }
+
+  .trust-metric-item h4 {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    font-size: 1.55rem;
+  }
+
   .benefit-grid {
     grid-template-columns: 1fr;
   }
+
   .calc-grid-options {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
+
   .dimension-inputs-row {
     grid-template-columns: 1fr;
   }
+
   .about-features-list {
     grid-template-columns: 1fr;
   }
+
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   }
 }
